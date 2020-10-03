@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <div class="library-container">
+      <table>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Pages</th>
+          <th>Read</th>
+          <th>Toggle Read</th>
+          <th>Delete</th>
+        </tr>
+      </table>
+      <form>
+        <label for="title">Title:</label><br />
+        <input type="text" id="title" name="title" /><br />
+        <label for="author">Author:</label><br />
+        <input type="text" id="author" name="author" /><br />
+        <label for="pages">Pages:</label><br />
+        <input type="text" id="pages" name="pages" /><br />
+        <input type="checkbox" id="read" name="read" value="read" />
+        <label for="read"> Read</label><br />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>
