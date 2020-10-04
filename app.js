@@ -44,3 +44,13 @@ function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(book);
   addBookToTable(title, author, pages, read);
 }
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const titleValue = title.value;
+  const authorValue = author.value;
+  const pagesValue = pages.value;
+  const readValue = read.checked;
+  addBookToLibrary(titleValue, authorValue, pagesValue, readValue);
+});
