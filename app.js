@@ -29,8 +29,6 @@ const deleteTable = () => {
 function addBookToTable(title, author, pages, read, index) {
   const row = document.createElement("tr");
 
-  //row.setAttribute("data-arr-pos", index);
-
   if (read === true) {
     read = "Read";
   } else {
@@ -42,7 +40,7 @@ function addBookToTable(title, author, pages, read, index) {
   <td>${author}</td>
   <td>${pages}</td>
   <td>${read}</td>
-  <td>Toggle</td>
+  <td class="toggle" data-arr-pos = ${index}>Toggle</td>
   <td class="delete" data-arr-pos = ${index}>Trash</td>
   `;
   table.appendChild(row);
@@ -56,12 +54,49 @@ function addLibrarytoTable(arr) {
     addBookToTable(title, author, pages, read, index);
   }
   makeDeleteReady();
+  makeToggleReady();
 }
 
 function addBookToLibrary(title, author, pages, read) {
   const book = new Book(title, author, pages, read);
   myLibrary.push(book);
   const index = myLibrary.indexOf(book);
+  addLibrarytoTable(myLibrary);
+}
+
+function makeDeleteReady() {
+  const deleteButtonList = document.querySelectorAll(".delete");
+
+  deleteButtonList.forEach((element) => {
+    element.addEventListener("click", function (event) {
+      let arrayPosition = event.target.dataset.arrPos;
+
+      myLibrary.splice(arrayPosition, 1);
+
+      addLibrarytoTable(myLibrary);
+    });
+  });
+}
+
+function makeToggleReady() {
+  const toggleButtonList = document.querySelectorAll(".toggle");
+
+  toggleButtonList.forEach((element) => {
+    element.addEventListener("click", function (event) {
+      let arrayPosition = event.target.dataset.arrPos;
+      toggleRead(arrayPosition);
+    });
+  });
+}
+
+function toggleRead(arrPos) {
+  readStatus = myLibrary[arrPos].read;
+  console.log(readStatus);
+  if (readStatus) {
+    myLibrary[arrPos].read = false;
+  } else {
+    myLibrary[arrPos].read = true;
+  }
   addLibrarytoTable(myLibrary);
 }
 
@@ -75,31 +110,5 @@ form.addEventListener("submit", (event) => {
   addBookToLibrary(titleValue, authorValue, pagesValue, readValue);
 });
 
-function getArrPos() {
-  const rows = table.querySelectorAll("tr");
-  for (let row of rows) {
-    const arrPos = row.dataset.arrPos;
-    console.log(arrPos);
-  }
-}
-
-function makeDeleteReady() {
-  const deleteButtonList = document.querySelectorAll(".delete");
-
-  deleteButtonList.forEach((element) => {
-    element.addEventListener("click", function (event) {
-      let keyOfBook = event.target.dataset.arrPos;
-
-      myLibrary.splice(keyOfBook, 1);
-
-      addLibrarytoTable(myLibrary);
-    });
-  });
-}
-
-addBookToLibrary("Lord of the Rings", "J R R Tolkien", 1735, "read");
-addBookToLibrary("Lord of the Flies", "Willam Gibson", 435, "read");
-addBookToLibrary("Lord of the Flies", "Willam Gibson", 435, "read");
-addBookToLibrary("Lord of the Flies", "Willam Gibson", 435, "read");
-addBookToLibrary("Lord of the Flies", "Willam Gibson", 435, "read");
-addBookToLibrary("Lord of the Flies", "Willam Gibson", 435, "read");
+addBookToLibrary("Lord of the Rings", "J R R Tolkien", 1735, true);
+addBookToLibrary("Lord of the Flies", "Willam Gibson", 435, false);
